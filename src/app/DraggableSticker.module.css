@@ -1,0 +1,36 @@
+.sticker {
+  position: absolute;
+  /* The container itself isn't interactive — only the centered .hit area is. */
+  pointer-events: none;
+  touch-action: none;
+  user-select: none;
+  border-radius: 12px;
+  filter: drop-shadow(2px 4px 6px rgba(0, 0, 0, 0.12));
+  transition: filter 0.15s ease;
+}
+
+.sticker[data-dragging="true"] {
+  filter: drop-shadow(4px 8px 12px rgba(0, 0, 0, 0.18));
+}
+
+.img {
+  display: block;
+  width: 100%;
+  height: auto;
+  pointer-events: none;
+}
+
+/* Centered, draggable hit region (size controlled by hitScale) */
+.hit {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: auto;
+  cursor: grab;
+  touch-action: none;
+}
+
+.sticker[data-dragging="true"] .hit {
+  cursor: grabbing;
+}

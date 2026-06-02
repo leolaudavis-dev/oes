@@ -1,0 +1,141 @@
+.page {
+  min-height: 100vh;
+  padding: 48px 56px 90px 64px;
+  font-family: var(--font-gochi), "Comic Sans MS", cursive;
+}
+
+.header {
+  position: relative;
+  width: fit-content;
+  margin: 0 auto 44px;
+  text-align: center;
+}
+
+.back {
+  display: inline-block;
+  margin-bottom: 14px;
+  padding: 7px 16px;
+  font-family: var(--font-gochi), cursive;
+  font-size: 16px;
+  color: #8a2d5f;
+  background: linear-gradient(to bottom, #ffffff, #ffe6f1);
+  border: 2px solid #ff9ec4;
+  border-radius: 999px;
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.9), 2px 3px 0 rgba(255, 122, 162, 0.25);
+  transition: transform 0.12s ease;
+}
+
+.back:hover {
+  transform: translateY(-1px);
+}
+
+.title {
+  font-family: var(--font-flowergirl), var(--font-caveat), cursive;
+  text-transform: uppercase;
+  font-size: 58px;
+  line-height: 1;
+  color: #e0457f;
+  text-shadow: 1px 1px 0 #ffd3e6;
+}
+
+.subtitle {
+  margin-top: 4px;
+  font-family: var(--font-caveat), cursive;
+  font-size: 24px;
+  color: #c76a99;
+}
+
+.tracks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 28px 32px;
+  align-items: flex-start;
+  justify-content: center;
+  max-width: 880px;
+  margin: 0 auto;
+}
+
+.card {
+  position: relative;
+  width: 380px;
+  max-width: 100%;
+  padding: 18px 18px 16px;
+  background: #ffffff;
+  border-radius: 6px;
+  box-shadow: 3px 7px 16px rgba(180, 90, 130, 0.28);
+  transition: transform 0.18s ease;
+}
+
+.card[data-tilt="left"] {
+  transform: rotate(-1.8deg);
+}
+
+.card[data-tilt="right"] {
+  transform: rotate(1.8deg);
+}
+
+.card:hover {
+  transform: rotate(0deg) scale(1.02);
+  z-index: 2;
+}
+
+.tape {
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  width: 92px;
+  height: 24px;
+  transform: translateX(-50%) rotate(-3deg);
+  background: rgba(255, 170, 200, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.num {
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  flex: none;
+  font-family: var(--font-gochi), cursive;
+  font-size: 15px;
+  color: #fff;
+  background: radial-gradient(circle at 35% 30%, #ff9ec4, #d6418a);
+  border-radius: 50%;
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.2);
+}
+
+.note {
+  font-size: 22px;
+  color: #ff7aa2;
+}
+
+.trackTitle {
+  font-family: var(--font-caveat), cursive;
+  font-size: 26px;
+  line-height: 1.1;
+  color: #a23a6e;
+}
+
+.audio {
+  width: 100%;
+  height: 40px;
+}
+
+@media (max-width: 600px) {
+  .page {
+    padding: 32px 20px 80px;
+  }
+
+  .card {
+    width: 90vw;
+    max-width: 360px;
+  }
+}

@@ -1,0 +1,306 @@
+.page {
+  min-height: 100vh;
+  padding: 48px 56px 90px 64px;
+  font-family: var(--font-gochi), "Comic Sans MS", cursive;
+}
+
+.header {
+  position: relative;
+  width: fit-content;
+  margin: 0 auto 36px;
+  text-align: center;
+}
+
+.back {
+  display: inline-block;
+  margin-bottom: 14px;
+  padding: 7px 16px;
+  font-family: var(--font-gochi), cursive;
+  font-size: 16px;
+  color: #8a2d5f;
+  background: linear-gradient(to bottom, #ffffff, #ffe6f1);
+  border: 2px solid #ff9ec4;
+  border-radius: 999px;
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.9), 2px 3px 0 rgba(255, 122, 162, 0.25);
+  transition: transform 0.12s ease;
+}
+
+.back:hover {
+  transform: translateY(-1px);
+}
+
+.title {
+  font-family: var(--font-flowergirl), var(--font-caveat), cursive;
+  text-transform: uppercase;
+  font-size: 58px;
+  line-height: 1;
+  color: #e0457f;
+  text-shadow: 1px 1px 0 #ffd3e6;
+}
+
+.subtitle {
+  margin-top: 4px;
+  font-family: var(--font-caveat), cursive;
+  font-size: 24px;
+  color: #c76a99;
+}
+
+/* Monster pen — nib hovers at the text caret, wiggles like real writing */
+.pen {
+  position: fixed;
+  z-index: 70;
+  pointer-events: none;
+  opacity: 0;
+  /* Offset so the pen's nib (≈55% / 78% of the image) sits on the caret,
+     and lift it a touch so it hovers just above the cursor. */
+  transform: translate(-82px, -90px);
+  transition: opacity 0.2s ease, left 0.08s linear, top 0.08s linear;
+  filter: drop-shadow(3px 6px 6px rgba(0, 0, 0, 0.18));
+}
+
+.pen[data-shown="true"] {
+  opacity: 1;
+}
+
+.penInner {
+  transform-origin: 55% 78%;
+}
+
+.penInner img {
+  display: block;
+  width: 150px;
+  height: auto;
+}
+
+/* Quick scratch wiggle while characters are being typed */
+.pen[data-writing="true"] .penInner {
+  animation: penScratch 0.28s ease-in-out infinite;
+}
+
+@keyframes penScratch {
+  0% {
+    transform: rotate(0deg) translate(0, 0);
+  }
+  25% {
+    transform: rotate(2.5deg) translate(-1px, 1.5px);
+  }
+  50% {
+    transform: rotate(0deg) translate(0, 0);
+  }
+  75% {
+    transform: rotate(-2.5deg) translate(1px, 1.5px);
+  }
+  100% {
+    transform: rotate(0deg) translate(0, 0);
+  }
+}
+
+/* Flip upside down and scrub side-to-side while text is being deleted */
+.pen[data-erasing="true"] .penInner {
+  animation: penErase 0.26s ease-in-out infinite;
+}
+
+@keyframes penErase {
+  0% {
+    transform: rotate(180deg) translate(0, 0);
+  }
+  25% {
+    transform: rotate(180deg) translate(7px, -1px);
+  }
+  50% {
+    transform: rotate(180deg) translate(0, 0);
+  }
+  75% {
+    transform: rotate(180deg) translate(-7px, -1px);
+  }
+  100% {
+    transform: rotate(180deg) translate(0, 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pen[data-writing="true"] .penInner,
+  .pen[data-erasing="true"] .penInner {
+    animation: none;
+  }
+  /* Still flip when erasing, just without the scrubbing motion. */
+  .pen[data-erasing="true"] .penInner {
+    transform: rotate(180deg);
+  }
+}
+
+/* Sign-in form, taped like a note */
+.form {
+  position: relative;
+  width: min(480px, 100%);
+  margin: 0 auto 48px;
+  padding: 26px 22px 22px;
+  background: #fff6fb;
+  border: 2px dashed #ff9ec4;
+  border-radius: 14px;
+  box-shadow: 3px 6px 0 rgba(255, 122, 162, 0.22);
+  transform: rotate(-1deg);
+}
+
+.tape {
+  position: absolute;
+  top: -13px;
+  left: 50%;
+  width: 110px;
+  height: 26px;
+  transform: translateX(-50%) rotate(2deg);
+  background: rgba(255, 170, 200, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+.field {
+  display: block;
+  margin-bottom: 14px;
+}
+
+.label {
+  display: block;
+  margin-bottom: 4px;
+  font-family: var(--font-caveat), cursive;
+  font-size: 22px;
+  color: #d6418a;
+}
+
+.input,
+.textarea {
+  width: 100%;
+  padding: 10px 12px;
+  font-family: var(--font-gochi), cursive;
+  font-size: 16px;
+  color: #8a2d5f;
+  background: #ffffff;
+  border: 2px solid #ffc2dc;
+  border-radius: 10px;
+  outline: none;
+  resize: vertical;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.input:focus,
+.textarea:focus {
+  border-color: #ff7aa2;
+  box-shadow: 0 0 0 3px rgba(255, 158, 196, 0.35);
+}
+
+.error {
+  margin-bottom: 10px;
+  font-family: var(--font-gochi), cursive;
+  font-size: 15px;
+  color: #c0392b;
+}
+
+.submit {
+  width: 100%;
+  padding: 11px 14px;
+  font-family: var(--font-gochi), cursive;
+  font-size: 18px;
+  color: #ffffff;
+  background: linear-gradient(to bottom, #ff8fb6, #ff6f9c);
+  border: 2px solid #ff7aa2;
+  border-radius: 999px;
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.7), 2px 3px 0 rgba(214, 65, 138, 0.3);
+  cursor: pointer;
+  transition: transform 0.12s ease, opacity 0.12s ease;
+}
+
+.submit:hover:not(:disabled) {
+  transform: translateY(-1px);
+}
+
+.submit:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+/* Entries wall */
+.entries {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 26px 30px;
+  align-items: flex-start;
+  justify-content: center;
+  max-width: 920px;
+  margin: 0 auto;
+}
+
+.empty {
+  font-family: var(--font-caveat), cursive;
+  font-size: 26px;
+  color: #c76a99;
+  text-align: center;
+}
+
+.entry {
+  position: relative;
+  width: 270px;
+  padding: 26px 18px 16px;
+  background: #fffdf0;
+  border-radius: 4px;
+  box-shadow: 3px 6px 14px rgba(180, 90, 130, 0.25);
+  transition: transform 0.18s ease;
+}
+
+.entry[data-tilt="left"] {
+  transform: rotate(-2deg);
+}
+
+.entry[data-tilt="right"] {
+  transform: rotate(2deg);
+}
+
+.entry:hover {
+  transform: rotate(0deg) scale(1.03);
+  z-index: 2;
+}
+
+.pin {
+  position: absolute;
+  top: -9px;
+  left: 50%;
+  width: 16px;
+  height: 16px;
+  transform: translateX(-50%);
+  background: radial-gradient(circle at 35% 30%, #ff9ec4, #d6418a);
+  border-radius: 50%;
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.25);
+}
+
+.message {
+  font-family: var(--font-gochi), cursive;
+  font-size: 18px;
+  line-height: 1.4;
+  color: #6a4a2a;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.meta {
+  margin-top: 12px;
+  font-family: var(--font-caveat), cursive;
+  font-size: 22px;
+  color: #a23a6e;
+}
+
+.date {
+  display: block;
+  margin-top: 2px;
+  font-family: var(--font-gochi), cursive;
+  font-size: 13px;
+  color: #c79bb1;
+}
+
+@media (max-width: 600px) {
+  .page {
+    padding: 32px 20px 80px;
+  }
+
+  .entry {
+    width: 90vw;
+    max-width: 340px;
+  }
+}
