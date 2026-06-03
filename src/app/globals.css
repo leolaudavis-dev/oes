@@ -165,6 +165,20 @@ body::before {
   background-size: 22px 22px;
 }
 
+/* The Monday page opts out of the global banner + leopard border + hole-punch */
+body:has(.monday-page) {
+  padding: 0;
+}
+
+body:has(.monday-page) .marqueeBar,
+body:has(.monday-page) .frameTop,
+body:has(.monday-page) .frameBottom,
+body:has(.monday-page) .frameLeft,
+body:has(.monday-page) .frameRight,
+body:has(.monday-page)::before {
+  display: none;
+}
+
 @media (prefers-color-scheme: dark) {
   html {
     color-scheme: dark;
