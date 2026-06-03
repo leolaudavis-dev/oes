@@ -1,5 +1,4 @@
-import { promises as fs } from "fs";
-import path from "path";
+import { getDb } from "@/lib/mongodb";
 
 export type GuestEntry = {
   id: string;
@@ -8,29 +7,16 @@ export type GuestEntry = {
   createdAt: string;
 };
 
-const DATA_DIR = path.join(process.cwd(), "data");
-const DATA_FILE = path.join(DATA_DIR, "guestbook.json");
-
-async function readEntries(): Promise<GuestEntry[]> {
-  try {
-    const raw = await fs.readFile(DATA_FILE, "utf8");
-    const parsed = JSON.parse(raw);
-    return Array.isArray(parsed) ? parsed : [];
-  } catch {
-    // File doesn't exist yet (or is unreadable) — start empty.
-    return [];
-  }
-}
-
-async function writeEntries(entries: GuestEntry[]): Promise<void> {
-  await fs.mkdir(DATA_DIR, { recursive: true });
-  await fs.writeFile(DATA_FILE, JSON.stringify(entries, null, 2), "utf8");
-}
+const COLLECTION = "guestbook";
 
 export async function GET() {
-  const entries = await readEntries();
-  // Newest first.
-  entries.sort((a, b) => b.createdAt.localeCompare(a.createdAt));
+  const db = await getDb();
+  const entries = await db
+    .collection<GuestEntry>(COLLECTION)
+    .find({}, { projection: { _id: 0 } })
+    // Newest first.
+    .sort({ createdAt: -1 })
+    .toArray();
   return Response.json({ entries });
 }
 
@@ -61,9 +47,9 @@ export async function POST(request: Request) {
     createdAt: new Date().toISOString(),
   };
 
-  const entries = await readEntries();
-  entries.push(entry);
-  await writeEntries(entries);
+  const db = await getDb();
+  // Spread so insertOne's added _id doesn't leak onto the response object.
+  await db.collection(COLLECTION).insertOne({ ...entry });
 
   return Response.json({ entry }, { status: 201 });
 }
