@@ -1,14 +1,23 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { useRouter } from "next/navigation";
 import styles from "./friday.module.css";
 
-const NAMES = ["amelia", "alexa", "isaiah", "luna", "miles", "nora", "rosie"];
+const NAMES = ["amelia", "alexa", "Blue Shades", "isaiah", "miles", "nora"];
+
+// Names that lead to their own page.
+const NAME_ROUTES: Record<string, string> = {
+  "Blue Shades": "/blue-shades",
+  miles: "/miles",
+  isaiah: "/isaiah",
+};
 
 export default function NameMenu() {
   const [open, setOpen] = useState(false);
   const [selected, setSelected] = useState<string | null>(null);
   const ref = useRef<HTMLDivElement>(null);
+  const router = useRouter();
 
   // Close on outside click or Escape.
   useEffect(() => {
@@ -53,8 +62,13 @@ export default function NameMenu() {
                 className={styles.menuItem}
                 data-selected={selected === name}
                 onClick={() => {
-                  setSelected(name);
                   setOpen(false);
+                  const route = NAME_ROUTES[name];
+                  if (route) {
+                    router.push(route);
+                    return;
+                  }
+                  setSelected(name);
                 }}
               >
                 {name}

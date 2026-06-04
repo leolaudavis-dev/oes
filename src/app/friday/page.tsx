@@ -1,28 +1,34 @@
+import Image from "next/image";
 import Link from "next/link";
 import styles from "./friday.module.css";
-import NameMenu from "./NameMenu";
 import DraggableSticker from "../DraggableSticker";
 
-type Track = {
-  title: string;
-  file: string;
-  tilt: "left" | "right";
-};
-
-// Files live in /public/friday — encodeURI handles spaces and special chars.
-const TRACKS: Track[] = [
-  { title: "squished rainbows!!!!", file: "squished rainbows!!!!.m4a", tilt: "left" },
-  { title: "waves", file: "waves - Original.m4a", tilt: "right" },
-  { title: "canyons", file: "Canyons.m4a", tilt: "left" },
-  { title: "best thing ever", file: "Bestthingever.m4a", tilt: "right" },
-  { title: "boop", file: "Boop.m4a", tilt: "left" },
-  { title: "awesomeness", file: "AWESOMENESS.m4a", tilt: "right" },
-  { title: "7#", file: "7#.m4a", tilt: "left" },
-  { title: "sunrise beat", file: "sunrise beat.m4a", tilt: "right" },
-  { title: "dark times", file: "dark times.m4a", tilt: "left" },
-  { title: "merry christmas", file: "merry christmas.m4a", tilt: "right" },
-  { title: "heat wave", file: "heat wave .m4a", tilt: "left" },
-  { title: "reserved for dan", file: "reserved for dan.m4a", tilt: "right" },
+const COVERS: { src: string; alt: string; href?: string }[] = [
+  {
+    src: "/friday/covers/see-my-vision.png",
+    alt: "See My Vision — Nora & Alexa",
+    href: "/alexa-nora",
+  },
+  {
+    src: "/friday/covers/blue-shades.png",
+    alt: "Rosie and Luna are Blue Shades",
+    href: "/blue-shades",
+  },
+  {
+    src: "/friday/covers/be-yourself.png",
+    alt: "Be Yourself — Amelia Reeves",
+    href: "/amelia",
+  },
+  {
+    src: "/friday/covers/futures-of-dance.png",
+    alt: "Futures of Dance — Zip Up",
+    href: "/isaiah",
+  },
+  {
+    src: "/friday/covers/miles-grieser.png",
+    alt: "Miles Grieser — The Even Funner Tracks",
+    href: "/miles",
+  },
 ];
 
 export default function FridayPage() {
@@ -42,39 +48,30 @@ export default function FridayPage() {
         <Link href="/" className={styles.back}>
           ← back to scrapbook
         </Link>
-        <NameMenu />
       </div>
 
-      <header className={styles.header}>
-        <h1 className={styles.title}>Friday</h1>
-        <p className={styles.subtitle}>~ after school music club ~</p>
-      </header>
-
-      <div className={styles.tracks}>
-        {TRACKS.map((track, i) => (
-          <figure
-            key={track.file}
-            className={styles.card}
-            data-tilt={track.tilt}
-          >
-            <span className={styles.tape} aria-hidden />
-            <div className={styles.label}>
-              <span className={styles.num}>{i + 1}</span>
-              <span className={styles.note} aria-hidden>
-                ♫
-              </span>
-              <figcaption className={styles.trackTitle}>{track.title}</figcaption>
+      <div className={styles.covers}>
+        {COVERS.map((cover) => {
+          const img = (
+            <Image
+              className={styles.coverImg}
+              src={cover.src}
+              alt={cover.alt}
+              width={500}
+              height={500}
+              sizes="(max-width: 600px) 90vw, (max-width: 900px) 45vw, 260px"
+            />
+          );
+          return cover.href ? (
+            <Link key={cover.src} href={cover.href} className={styles.cover}>
+              {img}
+            </Link>
+          ) : (
+            <div key={cover.src} className={styles.cover}>
+              {img}
             </div>
-            <audio
-              className={styles.audio}
-              controls
-              preload="none"
-              src={`/friday/${encodeURIComponent(track.file)}`}
-            >
-              Your browser does not support the audio element.
-            </audio>
-          </figure>
-        ))}
+          );
+        })}
       </div>
     </div>
   );

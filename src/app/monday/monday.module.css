@@ -32,7 +32,7 @@
   position: absolute;
   bottom: 0;
   left: 0;
-  width: clamp(180px, 22vw, 300px);
+  width: clamp(120px, 15vw, 200px);
   aspect-ratio: 637 / 873;
   background: url("/monday/stickers-corner.png") bottom left / 100% 100% no-repeat;
   transform: rotate(-3deg);
