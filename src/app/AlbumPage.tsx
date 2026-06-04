@@ -14,8 +14,11 @@ type Props = {
   cover?: string;
   released?: string;
   about?: string;
+  bio?: string;
   tags?: string[];
   audioBase?: string;
+  infoAudio?: string;
+  infoAudioLabel?: string;
 };
 
 function fmt(s?: number) {
@@ -33,8 +36,11 @@ export default function AlbumPage({
   cover,
   released,
   about,
+  bio,
   tags = [],
   audioBase = "/friday/",
+  infoAudio,
+  infoAudioLabel,
 }: Props) {
   const audioRef = useRef<HTMLAudioElement>(null);
   const [current, setCurrent] = useState(0);
@@ -142,9 +148,6 @@ export default function AlbumPage({
               </span>
             </>
           )}
-          <span className={styles.coverPlay} aria-hidden>
-            {playing ? "❚❚" : "▶"}
-          </span>
         </button>
 
         {hasTracks ? (
@@ -260,23 +263,17 @@ export default function AlbumPage({
           {tabOpen ? "› close" : "‹ info"}
         </button>
         <div className={styles.drawerBody}>
-          <h2 className={styles.drawerTitle}>{album}</h2>
+          <h2 className={styles.drawerTitle}>
+            {bio ? "About the artist" : album}
+          </h2>
           <p className={styles.drawerArtist}>by {artist}</p>
-          {hasTracks && (
-            <p className={styles.drawerLine}>
-              {tracks.length} track{tracks.length === 1 ? "" : "s"}
-              {totalSec ? ` · ${totalMin} min` : ""}
-            </p>
-          )}
-          {released && <p className={styles.drawerLine}>{released}</p>}
-          {about && <p className={styles.drawerLine}>{about}</p>}
-          {tags.length > 0 && (
-            <div className={styles.drawerTags}>
-              {tags.map((tag) => (
-                <span key={tag} className={styles.tag}>
-                  {tag}
-                </span>
-              ))}
+          {bio && <p className={styles.drawerBio}>{bio}</p>}
+          {infoAudio && (
+            <div className={styles.drawerAudioWrap}>
+              <p className={styles.drawerLine}>{infoAudioLabel ?? "bonus track"}</p>
+              <audio className={styles.drawerAudio} controls preload="none" src={infoAudio}>
+                Your browser does not support the audio element.
+              </audio>
             </div>
           )}
         </div>

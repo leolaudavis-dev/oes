@@ -20,7 +20,7 @@ const COVERS: { src: string; alt: string; href?: string }[] = [
     href: "/amelia",
   },
   {
-    src: "/friday/covers/futures-of-dance.png",
+    src: "/friday/covers/futures-of-dance-zipdown.png",
     alt: "Futures of Dance — Zip Up",
     href: "/isaiah",
   },

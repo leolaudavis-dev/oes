@@ -364,9 +364,27 @@
   color: #555;
 }
 
+.drawerBio {
+  margin: 0 0 14px;
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: #333;
+}
+
 .drawerTags {
   margin-top: 12px;
   display: flex;
   flex-wrap: wrap;
   gap: 7px;
+}
+
+.drawerAudioWrap {
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px solid #eee;
+}
+
+.drawerAudio {
+  width: 100%;
+  margin-top: 4px;
 }
