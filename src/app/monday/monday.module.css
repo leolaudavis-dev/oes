@@ -4,7 +4,7 @@
   min-height: 100vh;
   padding: 80px 48px 90px 230px;
   font-family: var(--font-gochi), "Comic Sans MS", cursive;
-  background: url("/monday/party-hats-bg.png") center / cover no-repeat fixed, #ffffff;
+  background: #ffffff;
 }
 
 /* 8-bit pixel-art cursor everywhere on the page */
