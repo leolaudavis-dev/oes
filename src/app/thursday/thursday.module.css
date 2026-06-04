@@ -3,7 +3,7 @@
   min-height: 100vh;
   padding: 60px 48px 80px 210px;
   font-family: var(--font-gochi), "Comic Sans MS", cursive;
-  background: #e3d4f5;
+  background: url("/thursday/kittens-bg.png") center / cover no-repeat fixed, #ffffff;
 }
 
 /* MS Paint window as a monitor frame, with photos nestled in its canvas */
