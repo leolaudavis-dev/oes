@@ -37,6 +37,7 @@ export default function DraggableSticker({
   const [pos, setPos] = useState({ x: initialX, y: initialY });
   const [z, setZ] = useState(BASE_Z);
   const [dragging, setDragging] = useState(false);
+  const [ready, setReady] = useState(false);
   const offset = useRef({ x: 0, y: 0 });
   // Refs mirror the latest pos/z synchronously so saving never reads a stale
   // value from a render that hasn't committed yet (e.g. a quick drag-release).
@@ -75,8 +76,17 @@ export default function DraggableSticker({
     } catch {
       // ignore unavailable/corrupt storage
     }
+    setReady(true);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  // Persist the moment position / stacking order changes (after the initial
+  // restore), so a sticker always stays exactly where it was left.
+  useEffect(() => {
+    if (!ready) return;
+    persist();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pos, z, ready]);
 
   // Bring this sticker to the front of the stack.
   function bringToFront() {

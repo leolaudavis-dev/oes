@@ -6,7 +6,7 @@ export default function BlueShadesPage() {
       artist="Blue Shades"
       album="squished rainbows!!!!"
       accent="#2f6fb5"
-      cover="/friday/covers/blue-shades.png"
+      cover="/friday/covers/blue-shades-glitch.png"
       released="released 2026 · after school music club"
       about="Recorded at The Oregon Episcopal School"
       tags={["after school", "beats", "demo"]}

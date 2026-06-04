@@ -10,7 +10,7 @@ const COVERS: { src: string; alt: string; href?: string }[] = [
     href: "/alexa-nora",
   },
   {
-    src: "/friday/covers/blue-shades.png",
+    src: "/friday/covers/blue-shades-glitch.png",
     alt: "Rosie and Luna are Blue Shades",
     href: "/blue-shades",
   },
