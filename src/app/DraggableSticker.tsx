@@ -5,8 +5,10 @@ import Image from "next/image";
 import styles from "./DraggableSticker.module.css";
 
 // Shared across all stickers: the highest z-index handed out so far, so the
-// most recently grabbed sticker always sits on top.
+// most recently grabbed sticker always sits on top — but capped below MAX_Z so
+// stickers always stay underneath the leopard border (z-index 60).
 const BASE_Z = 40;
+const MAX_Z = 58;
 let topZ = BASE_Z;
 
 type Props = {
@@ -36,7 +38,22 @@ export default function DraggableSticker({
   const [z, setZ] = useState(BASE_Z);
   const [dragging, setDragging] = useState(false);
   const offset = useRef({ x: 0, y: 0 });
+  // Refs mirror the latest pos/z synchronously so saving never reads a stale
+  // value from a render that hasn't committed yet (e.g. a quick drag-release).
+  const posRef = useRef({ x: initialX, y: initialY });
+  const zRef = useRef(BASE_Z);
   const storageKey = `sticker-pos:${src}`;
+
+  function persist() {
+    try {
+      localStorage.setItem(
+        storageKey,
+        JSON.stringify({ x: posRef.current.x, y: posRef.current.y, z: zRef.current })
+      );
+    } catch {
+      // ignore unavailable storage
+    }
+  }
 
   // Restore a saved position + stacking order on mount (client-only).
   useEffect(() => {
@@ -45,11 +62,14 @@ export default function DraggableSticker({
       if (saved) {
         const parsed = JSON.parse(saved);
         if (typeof parsed?.x === "number" && typeof parsed?.y === "number") {
+          posRef.current = { x: parsed.x, y: parsed.y };
           setPos({ x: parsed.x, y: parsed.y });
         }
         if (typeof parsed?.z === "number") {
-          setZ(parsed.z);
-          topZ = Math.max(topZ, parsed.z);
+          const zz = Math.min(parsed.z, MAX_Z);
+          zRef.current = zz;
+          setZ(zz);
+          topZ = Math.min(MAX_Z, Math.max(topZ, zz));
         }
       }
     } catch {
@@ -60,7 +80,8 @@ export default function DraggableSticker({
 
   // Bring this sticker to the front of the stack.
   function bringToFront() {
-    topZ += 1;
+    topZ = Math.min(MAX_Z, topZ + 1);
+    zRef.current = topZ;
     setZ(topZ);
     return topZ;
   }
@@ -70,8 +91,8 @@ export default function DraggableSticker({
     bringToFront();
     // Track positions in page (document) coordinates so scroll doesn't drift.
     offset.current = {
-      x: e.clientX + window.scrollX - pos.x,
-      y: e.clientY + window.scrollY - pos.y,
+      x: e.clientX + window.scrollX - posRef.current.x,
+      y: e.clientY + window.scrollY - posRef.current.y,
     };
     setDragging(true);
     (e.target as HTMLElement).setPointerCapture(e.pointerId);
@@ -79,20 +100,18 @@ export default function DraggableSticker({
 
   function handlePointerMove(e: React.PointerEvent) {
     if (!dragging) return;
-    setPos({
+    const next = {
       x: e.clientX + window.scrollX - offset.current.x,
       y: e.clientY + window.scrollY - offset.current.y,
-    });
+    };
+    posRef.current = next;
+    setPos(next);
   }
 
   function handlePointerUp(e: React.PointerEvent) {
     setDragging(false);
     (e.target as HTMLElement).releasePointerCapture(e.pointerId);
-    try {
-      localStorage.setItem(storageKey, JSON.stringify({ ...pos, z }));
-    } catch {
-      // ignore unavailable storage
-    }
+    persist();
   }
 
   return (

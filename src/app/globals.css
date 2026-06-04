@@ -166,16 +166,16 @@ body::before {
 }
 
 /* These pages opt out of the global banner + leopard border + hole-punch */
-body:has(.monday-page, .thursday-page) {
+body:has(.monday-page, .thursday-page, .friday-page) {
   padding: 0;
 }
 
-body:has(.monday-page, .thursday-page) .marqueeBar,
-body:has(.monday-page, .thursday-page) .frameTop,
-body:has(.monday-page, .thursday-page) .frameBottom,
-body:has(.monday-page, .thursday-page) .frameLeft,
-body:has(.monday-page, .thursday-page) .frameRight,
-body:has(.monday-page, .thursday-page)::before {
+body:has(.monday-page, .thursday-page, .friday-page) .marqueeBar,
+body:has(.monday-page, .thursday-page, .friday-page) .frameTop,
+body:has(.monday-page, .thursday-page, .friday-page) .frameBottom,
+body:has(.monday-page, .thursday-page, .friday-page) .frameLeft,
+body:has(.monday-page, .thursday-page, .friday-page) .frameRight,
+body:has(.monday-page, .thursday-page, .friday-page)::before {
   display: none;
 }
 

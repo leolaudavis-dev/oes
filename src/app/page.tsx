@@ -8,18 +8,18 @@ import styles from "./page.module.css";
 
 // Days that have their own scrapbook page.
 const DAY_ROUTES: Record<string, string> = {
-  Monday: "/monday",
-  Thursday: "/thursday",
-  Friday: "/friday",
+  "Stickers, oh my!": "/monday",
+  "Skating!": "/skating",
+  "Digital Design": "/thursday",
+  "Beat Makers": "/friday",
   Guestbook: "/guestbook",
 };
 
 const WEEKDAYS = [
-  "Monday",
-  "Tuesday",
-  "Wednesday",
-  "Thursday",
-  "Friday",
+  "Stickers, oh my!",
+  "Skating!",
+  "Digital Design",
+  "Beat Makers",
   "Guestbook",
 ];
 
@@ -157,7 +157,7 @@ export default function Home() {
           <span className={styles.tapeLeft} aria-hidden />
           <span className={styles.tapeRight} aria-hidden />
           <h1 className={styles.title}>My After School Scrapbook</h1>
-          <p className={styles.subtitle}>~ a week to remember ~</p>
+          <p className={styles.subtitle}>~ 2025-2026 school year ~</p>
         </header>
 
         <div className={styles.collage}>
@@ -192,7 +192,7 @@ export default function Home() {
             <p className={styles.stickyText}>
               {selected
                 ? `today feels like a ${selected} ♡`
-                : "pick a day from the tab on the left!"}
+                : "pick a class from the tab on the left!"}
             </p>
           </div>
 
@@ -221,11 +221,7 @@ export default function Home() {
           <span className={styles.stickerCloud}>☆</span>
         </div>
 
-        {/* Frutiger Aero accents: a glossy aqua orb + a leaf bubble */}
-        <div className={styles.aeroOrb} data-tilt="right" aria-hidden>
-          <span className={styles.aeroOrbShine} />
-          <span className={styles.aeroOrbLeaf}>🌿</span>
-        </div>
+        {/* Frutiger Aero accent: a glossy droplet */}
         <div className={styles.aeroDroplet} aria-hidden>
           <span className={styles.aeroDropShine} />
         </div>

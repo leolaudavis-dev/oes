@@ -1,5 +1,7 @@
 import Link from "next/link";
 import styles from "./friday.module.css";
+import NameMenu from "./NameMenu";
+import DraggableSticker from "../DraggableSticker";
 
 type Track = {
   title: string;
@@ -25,11 +27,25 @@ const TRACKS: Track[] = [
 
 export default function FridayPage() {
   return (
-    <div className={styles.page}>
-      <header className={styles.header}>
+    <div className={`${styles.page} friday-page`}>
+      <DraggableSticker
+        src="/friday/note-corner.png"
+        alt="rhinestone music note"
+        width={200}
+        height={175}
+        initialX={300}
+        initialY={180}
+        rotate={-6}
+      />
+
+      <div className={styles.topLeft}>
         <Link href="/" className={styles.back}>
           ← back to scrapbook
         </Link>
+        <NameMenu />
+      </div>
+
+      <header className={styles.header}>
         <h1 className={styles.title}>Friday</h1>
         <p className={styles.subtitle}>~ after school music club ~</p>
       </header>

@@ -6,13 +6,14 @@ import DraggableSticker from "./DraggableSticker";
 export default function MondayPage() {
   return (
     <div className={`${styles.page} monday-page`}>
+      <Link href="/" className={styles.back}>
+        ← back to scrapbook
+      </Link>
       <header className={styles.header}>
-        <Link href="/" className={styles.back}>
-          ← back to scrapbook
-        </Link>
         <h1 className={styles.title}>Monday</h1>
-        <p className={styles.subtitle}>~ after school art club ~</p>
       </header>
+
+      <div className={styles.stickersCorner} aria-hidden />
 
       <MondayGallery />
 
